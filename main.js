@@ -7,6 +7,7 @@ function start(){
 
 function urlUpdated(){
     updateParametros();
+    atualizaSecao();
 }
 
 function $(id){
@@ -74,6 +75,7 @@ function updateUrl(parametros){
     }
 
     history.pushState(null, null, url);
+    updateParametros();
 }
 
 function mudarSecao(secao, atualizaUrl){

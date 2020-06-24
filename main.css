@@ -34,3 +34,26 @@ h1 {
     text-decoration: underline;
     margin-bottom: 3rem;
 }
+
+#cartela_bingo{
+    width:500px;
+    height: 500px;
+    margin: 1em auto;
+    border: 2px solid;
+}
+
+#cartela_bingo thead {
+    font-weight: bold;;
+}
+
+#cartela_bingo th, #cartela_bingo td {
+    width: 20%;
+    height: 20%;
+    vertical-align: middle;
+    font-size: 2em;
+    border: 1px solid #000;
+}
+
+#cartela_bingo th {
+    border-bottom-width: 2px;
+}
