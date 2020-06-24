@@ -36,14 +36,14 @@ h1 {
 }
 
 #cartela_bingo{
-    width:500px;
+    width: 500px;
     height: 500px;
     margin: 1em auto;
     border: 2px solid;
 }
 
 #cartela_bingo thead {
-    font-weight: bold;;
+    font-weight: bold;
 }
 
 #cartela_bingo th, #cartela_bingo td {
