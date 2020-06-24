@@ -1,0 +1,36 @@
+html {
+    background-color: white;
+    font-family: Roboto, Verdana;
+    font-size: 14px;    
+    text-align: center;
+}
+
+body {
+    color: #000;
+    margin: 1em;
+}
+
+button {
+    font-size: 1em;
+}
+
+#start {
+    font-size: 2em;
+    
+}
+
+.secao {
+    display: none;
+}
+
+p {
+    margin-bottom: .5em;
+}
+
+h1 {
+    display: block;
+    font-size: 4em;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 3rem;
+}
