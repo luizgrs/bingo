@@ -28,7 +28,11 @@ function windowLoaded(){
 
     $('novaCartela').addEventListener('click', function(){
         iniciaCartela(true);
-    })
+    });
+
+    document.querySelectorAll('#cartela_bingo td').forEach(function(celula){
+        celula.addEventListener('click', celulaClicada);
+    });
 
     atualizaSecao();
 }
@@ -125,6 +129,16 @@ function iniciaCartela(forcarNova){
     }
 }
 
+function celulaClicada(event){
+    var celula = event.target;
+    
+    if(celula.id != 'joker'){
+        if(celula.classList.contains('marcado'))
+            celula.classList.remove('marcado');
+        else
+            celula.classList.add('marcado');
+    }
+}
 
 function atualizaCartela(cartela){
     if(!cartela){
@@ -144,6 +158,8 @@ function atualizaCartela(cartela){
     document.querySelectorAll('#cartela_bingo td').forEach(function(celula, index){
         var celulaLinha = Math.floor(index / 5),
             celulaColuna = index % 5;
+
+        celula.classList.remove('marcado');
 
         if(celulaLinha != 2 || celulaColuna != 2){
             celula.innerText = cartela[celulaColuna][celulaLinha];

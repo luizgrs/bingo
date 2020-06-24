@@ -7,7 +7,7 @@ html {
 
 body {
     color: #000;
-    margin: 1em;
+    margin: 1em 0;
 }
 
 button {
@@ -48,6 +48,12 @@ h1 {
     font-weight: bold;
 }
 
+td.marcado {
+    background-color: #666;
+    color: white;
+    font-weight: bold;
+}
+
 #cartela_bingo th, #cartela_bingo td {
     width: 20%;
     height: 20%;
@@ -58,4 +64,8 @@ h1 {
 
 #cartela_bingo th {
     border-bottom-width: 2px;
+}
+
+#cartela_bingo td:not(#joker) {
+    cursor: pointer;
 }
