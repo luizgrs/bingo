@@ -19,7 +19,7 @@ function windowLoaded(){
 
     $('btnJogar').addEventListener('click', function(){
         mudarSecao('cartela', true);
-
+        iniciaCartela(true);
     });
 
     $('btnCantarNumeros').addEventListener('click', function(){
@@ -111,20 +111,25 @@ function mudarSecao(secao, atualizaUrl){
 
 function iniciaCartela(forcarNova){
     var cartela,
-        novaCartela = true;
+        novaCartela = true,
+        marcados = [];
 
     forcarNova = !!forcarNova;
 
     if(parametros.cartela && !forcarNova){
         cartela = JSON.parse(atob(parametros.cartela))
         novaCartela = false;
+
+        if(parametros.marcados)
+            marcados = JSON.parse(atob(parametros.marcados));
     }
 
-    var nova = atualizaCartela(cartela);
+    var nova = atualizaCartela(cartela, marcados);
 
     if(novaCartela){
         updateUrl(gerarParametros({
-            cartela: btoa(JSON.stringify(nova))
+            cartela: btoa(JSON.stringify(nova)),
+            marcados: btoa(JSON.stringify(marcados))
         }), !forcarNova);
     }
 }
@@ -133,14 +138,25 @@ function celulaClicada(event){
     var celula = event.target;
     
     if(celula.id != 'joker'){
-        if(celula.classList.contains('marcado'))
+        var marcados = JSON.parse(atob(parametros.marcados));
+        if(celula.classList.contains('marcado')){
             celula.classList.remove('marcado');
-        else
+            
+            var index = marcados.indexOf(parseInt(celula.innerText));
+            if(index > -1)
+                marcados.splice(index, 1);
+        }
+        else{
             celula.classList.add('marcado');
+            marcados.push(parseInt(celula.innerText));
+        }
+
+        parametros.marcados = btoa(JSON.stringify(marcados));
+        updateUrl(parametros, true);
     }
 }
 
-function atualizaCartela(cartela){
+function atualizaCartela(cartela, marcados){
     if(!cartela){
         var colunas = [
             [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
@@ -157,12 +173,16 @@ function atualizaCartela(cartela){
 
     document.querySelectorAll('#cartela_bingo td').forEach(function(celula, index){
         var celulaLinha = Math.floor(index / 5),
-            celulaColuna = index % 5;
+            celulaColuna = index % 5,
+            valor = cartela[celulaColuna][celulaLinha];
 
-        celula.classList.remove('marcado');
+        if(marcados && marcados.indexOf(valor) > -1)
+            celula.classList.add('marcado');
+        else
+            celula.classList.remove('marcado');
 
         if(celulaLinha != 2 || celulaColuna != 2){
-            celula.innerText = cartela[celulaColuna][celulaLinha];
+            celula.innerText = valor;
         }
     });
 
