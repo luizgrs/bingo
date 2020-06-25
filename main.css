@@ -78,6 +78,10 @@ td.marcado {
 
 #sorteados li {
     display: inline-block;
-    margin: 0 .5em;
+    margin: 0 .5em ;
     font-size: 2em;
+}
+
+#btnResetarSorteio {
+    margin-top: 10em;
 }

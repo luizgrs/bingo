@@ -36,6 +36,10 @@ function windowLoaded(){
         iniciaCartela(true);
     });
 
+    $('btnResetarSorteio').addEventListener('click', function(){
+        iniciaCantar(true);
+    });
+
     document.querySelectorAll('#cartela_bingo td').forEach(function(celula){
         celula.addEventListener('click', celulaClicada);
     });
@@ -45,20 +49,27 @@ function windowLoaded(){
 
 function iniciaCantar(zerar){
     var cantados = [];
+    
+    $('sorteados').innerHTML = '';
+
 
     if(!zerar && parametros.cantados){
-        JSON.parse(atob(parametros.cantados)).forEach(function(numero){
+        var cantados = JSON.parse(atob(parametros.cantados));
+        cantados.forEach(function(numero){
             var novoSorteado = document.createElement('li');
             novoSorteado.innerText = numero;
             $('sorteados').appendChild(novoSorteado);        
         });
+
+        if(cantados.length)
+            atualizaNumeroSorteado(cantados[cantados.length-1]);
     }
 
-    numeros = shuffle([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,
+    numeros = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,
     16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,
     31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,
     46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,
-    61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]); 
+    61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]; 
 
     if(zerar || !parametros.cantados){
         parametros.cantados = btoa(JSON.stringify([]));
@@ -72,12 +83,13 @@ function sortearNumero(){
     var cantados = JSON.parse(atob(parametros.cantados)),
         numero;
     do {
+        numeros = shuffle(numeros);
         numero = numeros.pop()
     }while(cantados.indexOf(numero) !== -1 || !numeros.length)
     
     cantados.push(numero);
 
-    $('sorteado').innerText = numero;
+    atualizaNumeroSorteado(numero);
 
     var novoSorteado = document.createElement('li');
     novoSorteado.innerText = numero;
@@ -86,6 +98,20 @@ function sortearNumero(){
     parametros.cantados = btoa(JSON.stringify(cantados));
 
     updateUrl(parametros, true);
+}
+
+function atualizaNumeroSorteado(numero){
+    var letra = 'O';
+    if(numero < 16)
+        letra = 'B';
+    else if (numero < 31)
+        letra = 'I';
+    else if (numero < 46)
+        letra = 'N';
+    else if (numero < 61)
+        letra = 'G';
+
+    $('sorteado').innerText = letra + ' ' + numero;
 }
 
 function atualizaSecao(){
