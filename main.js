@@ -37,7 +37,8 @@ function windowLoaded(){
     });
 
     $('btnResetarSorteio').addEventListener('click', function(){
-        iniciaCantar(true);
+        if(confirm('Os número já sorteado voltarão para o saco, deseja mesmo recomeçar?'))
+            iniciaCantar(true);
     });
 
     document.querySelectorAll('#cartela_bingo td').forEach(function(celula){
