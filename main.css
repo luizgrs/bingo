@@ -76,10 +76,36 @@ td.marcado {
     margin-top: 1rem;
 }
 
-#sorteados li {
+#sorteados li:first-child{
+    font-weight: bold;
+}
+
+#sorteados li:not(:first-child){
+    opacity: .1;
+}
+
+#sorteados li.marcado {
+    opacity: 1;
+}
+
+#sorteados ul {
     display: inline-block;
-    margin: 0 .5em ;
-    font-size: 2em;
+}
+
+#sorteados li {
+    display: block;
+    width: 30px;
+    font-size: 1.5em;
+}
+
+@media (min-width: 550px){
+    #sorteados ul {
+        display: block;
+    }
+    
+    #sorteados li {
+        display: inline-block;
+    }
 }
 
 #btnResetarSorteio {

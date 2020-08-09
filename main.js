@@ -50,16 +50,13 @@ function windowLoaded(){
 function iniciaCantar(zerar){
     var cantados = [];
     
-    $('sorteados').innerHTML = '';
-
+    document.querySelectorAll('#sorteados li').forEach(function(li){
+        li.classList.remove('marcado');
+    });
 
     if(!zerar && parametros.cantados){
         var cantados = JSON.parse(atob(parametros.cantados));
-        cantados.forEach(function(numero){
-            var novoSorteado = document.createElement('li');
-            novoSorteado.innerText = numero;
-            $('sorteados').appendChild(novoSorteado);        
-        });
+        cantados.forEach(marcarSorteado);
 
         if(cantados.length)
             atualizaNumeroSorteado(cantados[cantados.length-1]);
@@ -79,6 +76,15 @@ function iniciaCantar(zerar){
     
 }
 
+function marcarSorteado(numero){
+    var lista = coluna(numero);
+    var item = ((numero - 1) % 15) + 2;
+
+    var li = document.querySelector('#sorteados>ul:nth-child('+lista+')>li:nth-child('+item+')');
+
+    li.classList.add('marcado');
+}
+
 function sortearNumero(){
     var cantados = JSON.parse(atob(parametros.cantados)),
         numero;
@@ -91,27 +97,31 @@ function sortearNumero(){
 
     atualizaNumeroSorteado(numero);
 
-    var novoSorteado = document.createElement('li');
-    novoSorteado.innerText = numero;
-    $('sorteados').appendChild(novoSorteado);
+    marcarSorteado(numero);
 
     parametros.cantados = btoa(JSON.stringify(cantados));
 
     updateUrl(parametros, true);
 }
 
-function atualizaNumeroSorteado(numero){
-    var letra = 'O';
+function coluna(numero){
     if(numero < 16)
-        letra = 'B';
-    else if (numero < 31)
-        letra = 'I';
-    else if (numero < 46)
-        letra = 'N';
-    else if (numero < 61)
-        letra = 'G';
+        return 1;
+    
+    if (numero < 31)
+        return 2;
+    
+    if (numero < 46)
+        return 3;
+    
+    if (numero < 61)
+        return 4;
+    
+    return 5;
+}
 
-    $('sorteado').innerText = letra + ' ' + numero;
+function atualizaNumeroSorteado(numero){
+    $('sorteado').innerText = 'BINGO'.charAt(coluna(numero)-1) + ' ' + numero;
 }
 
 function atualizaSecao(){
