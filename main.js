@@ -82,6 +82,15 @@ function iniciaCantar(zerar){
     
 }
 
+function falar(mensagem){
+    if(window.speechSynthesis){
+        var utter = new SpeechSynthesisUtterance(mensagem);
+        utter.lang = "pt-BR";
+        utter.rate = 0.9;
+        window.speechSynthesis.speak(utter);
+    }
+}
+
 function marcarSorteado(numero){
     var lista = coluna(numero);
     var item = ((numero - 1) % 15) + 2;
@@ -112,6 +121,8 @@ function sortearNumero(){
     parametros.cantados = btoa(JSON.stringify(cantados));
 
     updateUrl(parametros, true);
+
+    falar(`${letraColuna(numero).replace("O", "Ó")} ${numero}`);
 }
 
 function coluna(numero){
@@ -130,8 +141,12 @@ function coluna(numero){
     return 5;
 }
 
+function letraColuna(numero){
+    return 'BINGO'.charAt(coluna(numero)-1);
+}
+
 function atualizaNumeroSorteado(numero){
-    $('sorteado').innerText = 'BINGO'.charAt(coluna(numero)-1) + ' ' + numero;
+    $('sorteado').innerText = letraColuna(numero) + ' ' + numero;
 }
 
 function atualizaSecao(){
