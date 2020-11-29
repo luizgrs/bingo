@@ -122,7 +122,47 @@ function sortearNumero(){
 
     updateUrl(parametros, true);
 
-    falar(`${letraColuna(numero).replace("O", "Ó").replace("I", " i")} ${numero}`);
+    cantarNumero(numero);
+
+}
+
+var frasesPorNumero = {
+    1 : "Começou o jogo",
+    2 : "Um patinho na lagoa",
+    22: "Dois patinhos na lagoa",
+    33: "A idade de cristo",
+    75: "Fim de jogo"
+};
+
+var falarFraseThreshold = 0.5;
+
+function cantarNumero(numero){
+    var coluna = letraColuna(numero).replace("O", "Ó").replace("I", " i");
+    var frase = frasesPorNumero[numero];
+    var mensagem;
+
+    if(frase){
+        var falarFrase = Math.random() > falarFraseThreshold;
+        if(falarFrase)
+            falarFraseThreshold = 0.5;
+        else
+            falarFraseThreshold -= 0.1;
+
+        if(falarFrase){
+            var posicao = Math.random();
+            if(posicao < 0.33)
+                mensagem = `${frase}, ${coluna} ${numero}`;
+            else if(posicao < 0.66)
+                mensagem = `${coluna}, ${frase}, ${numero}`;
+            else
+                mensagem = `${coluna} ${numero}, ${frase}`;
+        }            
+    }    
+
+    if(!mensagem)
+        mensagem = `${coluna} ${numero}`;
+
+    falar(mensagem);
 }
 
 function coluna(numero){
@@ -245,10 +285,6 @@ function iniciaCartela(forcarNova){
             marcados: btoa(JSON.stringify(marcados))
         }), !forcarNova);
     }
-}
-
-function marcarCelula(celula){
-    
 }
 
 function celulaClicada(event){
