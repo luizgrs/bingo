@@ -247,20 +247,23 @@ function iniciaCartela(forcarNova){
     }
 }
 
+function marcarCelula(celula){
+    
+}
+
 function celulaClicada(event){
     var celula = event.target;
     
+    var marcado = celula.classList.toggle('marcado');
+    
     if(celula.id != 'joker'){
         var marcados = JSON.parse(atob(parametros.marcados));
-        if(celula.classList.contains('marcado')){
-            celula.classList.remove('marcado');
-            
+        if(!marcado){
             var index = marcados.indexOf(parseInt(celula.innerText));
             if(index > -1)
                 marcados.splice(index, 1);
         }
         else{
-            celula.classList.add('marcado');
             marcados.push(parseInt(celula.innerText));
         }
 
