@@ -122,7 +122,7 @@ function sortearNumero(){
 
     updateUrl(parametros, true);
 
-    falar(`${letraColuna(numero).replace("O", "Ó").replace("I", "IH")} ${numero}`);
+    falar(`${letraColuna(numero).replace("O", "Ó")} ${numero}`);
 }
 
 function coluna(numero){
