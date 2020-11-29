@@ -129,8 +129,18 @@ function sortearNumero(){
 var frasesPorNumero = {
     1 : "Começou o jogo",
     2 : "Um patinho na lagoa",
+    10: "Raso",
+    12: "A vitamina",
+    20: "Raso",
     22: "Dois patinhos na lagoa",
+    25: "É natal",
+    30: "Raso",
     33: "A idade de cristo",
+    40: "Raso",
+    50: "Raso",
+    51: "Uma boa ideia",
+    60: "Raso",
+    70: "Raso",
     75: "Fim de jogo"
 };
 
